@@ -99,9 +99,9 @@ local themeStyles = {
 		ElementColor = Color3.fromRGB(52, 74, 95)
 	},
 	Sentinel = {
-		SchemeColor = Color3.fromRGB(230, 35, 69),
-		Background = Color3.fromRGB(32, 32, 32),
-		Header = Color3.fromRGB(24, 24, 24),
+		SchemeColor = Color3.fromRGB(151, 91, 211),
+		Background = Color3.fromRGB(19, 19, 19),
+		Header = Color3.fromRGB(32, 32, 32),
 		TextColor = Color3.fromRGB(255, 255, 255),
 		ElementColor = Color3.fromRGB(24, 24, 24)
 	},
@@ -128,22 +128,13 @@ local SettingsT = {
 
 local Name = "KavoConfig.JSON"
 
-pcall(function()
-
-	if not pcall(function() readfile(Name) end) then
-		writefile(Name, game:service'HttpService':JSONEncode(SettingsT))
-	end
-
-	Settings = game:service'HttpService':JSONEncode(readfile(Name))
-end)
-
 local LibName = tostring(math.random(1, 100))..tostring(math.random(1,50))..tostring(math.random(1, 100))
 
 function Kavo:ToggleUI()
-	if game.CoreGui[LibName].Enabled then
-		game.CoreGui[LibName].Enabled = false
+	if game.Players.LocalPlayer.PlayerGui[LibName].Enabled then
+		game.Players.LocalPlayer.PlayerGui[LibName].Enabled = false
 	else
-		game.CoreGui[LibName].Enabled = true
+		game.Players.LocalPlayer.PlayerGui[LibName].Enabled = true
 	end
 end
 
@@ -187,7 +178,7 @@ function Kavo.CreateLib(kavName, themeList)
 	local selectedTab 
 	kavName = kavName or "Library"
 	table.insert(Kavo, kavName)
-	for i,v in pairs(game.CoreGui:GetChildren()) do
+	for i,v in pairs(game.Players.LocalPlayer.PlayerGui:GetChildren()) do
 		if v:IsA("ScreenGui") and v.Name == kavName then
 			v:Destroy()
 		end
@@ -222,7 +213,7 @@ function Kavo.CreateLib(kavName, themeList)
 	blurFrame.Size = UDim2.new(0, 376, 0, 289)
 	blurFrame.ZIndex = 999
 
-	ScreenGui.Parent = game.CoreGui
+	ScreenGui.Parent = game.Players.LocalPlayer.PlayerGui
 	ScreenGui.Name = LibName
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	ScreenGui.ResetOnSpawn = false
@@ -2623,7 +2614,7 @@ function Kavo.CreateLib(kavName, themeList)
 
 				coroutine.wrap(function()
 					while wait() do
-						label.BackgroundColor3 = themeList.SchemeColor
+						label.BackgroundColor3 = Color3.fromRGB(24, 24, 24)
 						label.TextColor3 = themeList.TextColor
 					end
 				end)()
